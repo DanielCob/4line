@@ -1,5 +1,5 @@
 #lang racket
-(provide crearmatriz elementoMatriz algoritmo turno)
+(provide crearmatriz elementoMatriz algoritmo agregar)
 
 #|
  -Función crearmatriz
@@ -157,16 +157,12 @@
   (+ (combo (verifHorizontal (agregar 2 columna matriz) fila columna))
   (combo (verifVertical (agregar 2 columna matriz) fila columna))
   (combo (verifDiagonal_suma (agregar 2 columna matriz) fila columna))
-  (combo_vertical (verifHorizontal (agregar 1 columna matriz) fila columna))
-  (combo_vertical (verifVertical (agregar 1 columna matriz) fila columna))
+  (combo (verifHorizontal (agregar 1 columna matriz) fila columna))
+  (combo (verifVertical (agregar 1 columna matriz) fila columna))
   (combo (verifDiagonal_suma (agregar 1 columna matriz) fila columna))))
 
 (define (combo num)
   (cond ((>= num 2) (+ num 1))
-    (else num)))
-
-(define (combo_vertical num)
-  (cond ((>= num 2) (+ num 2))
     (else num)))
 
 #|
@@ -176,6 +172,7 @@
  -Devuelve el número de columna con mayor heurística.
 |#
 (define (seleccion columnas_heuristica)
+  (display columnas_heuristica)
   (car (argmax cadr columnas_heuristica)))
 
 #|
@@ -323,3 +320,13 @@
          (+ 1 (verifDiagonalDescDer matriz (- fila 1) (+ columna 1))))
         (else
          0)))
+
+(define (juego matriz columna)
+  (display matriz)
+  (juego_aux (turno 1 4 columna matriz))
+  )
+
+(define (juego_aux matriz)
+  (display matriz)
+  (juego (turno 2 4 (algoritmo matriz) matriz))
+  )
