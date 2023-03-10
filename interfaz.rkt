@@ -2,6 +2,53 @@
 (require 2htdp/image)
 (require "algoritmo.rkt")
 
+; Declare the starting window.
+(define frame (new frame% [label "4Line"]
+                          [width 200]
+                          [height 200]))
+
+; Declare the game window in a funtion because the size of window depends of the number of rows (n) and columns (M).
+
+
+;<---------------------------------------------------------------------- START WINDOW -------------------------------------------------------------------------------------------->
+
+
+; Show a message to player.
+(new message% [parent frame]
+              [label "4 line"])
+
+; Set the horizontal panel for the input text fields.
+(define PanelInput (new horizontal-panel%
+                   [parent frame]
+                   [alignment '(center center)]))
+
+; Set the input text field for the N parameter for the board.
+(define filas (new choice% [parent PanelInput]
+                                [label "Filas "]
+                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [vert-margin 10]
+                                [horiz-margin 30]))
+
+; Set the input text field for the M parameter for the board.
+(define columnas (new choice% [parent PanelInput]
+                                [label "Columnas "]
+                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [vert-margin 10]
+                                [horiz-margin 30]))
+
+; Set the "Play!" button.
+(new button% [parent frame]
+             [label "Jugar"]
+             [vert-margin 100]
+             [callback (lambda (button event) (juego (send filas get-string-selection) (send columnas get-string-selection)) (CloseStartWindow event))])
+
+; Show the start window.
+(send frame show #t)
+
+; Define the event to close the start window.
+(define (CloseStartWindow event)
+  (send frame show #f))
+
 ; Function to set the tokens on the board.
 (define (dibujarFicha color posX posY dc)
   (send dc set-brush color 'solid)
@@ -17,7 +64,7 @@
     (send ventanaJuego refresh))
 
   (define (clickCasilla_aux matriz_aux)
-    (cond ((equal? (turno 2 4 (algoritmo matriz) matriz) #t) (message-box "Fin de la partida" "Ganó la computadora"))
+    (cond ((equal? (turno 2 4 (algoritmo matriz_aux) matriz_aux) #t) (message-box "Fin de la partida" "Ganó la computadora"))
            (else (set! matriz (turno 2 4 (algoritmo matriz_aux) matriz_aux)))))
 
   ; Declare the width and height of the game window.
@@ -76,5 +123,3 @@
   ; Call the window to be shown
   (send ventanaJuego show #t)   
   )
-
-(juego "8" "8")
