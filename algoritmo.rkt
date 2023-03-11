@@ -157,17 +157,19 @@
   (+ (combo (verifHorizontal (agregar 2 columna matriz) fila columna))
   (combo (verifVertical (agregar 2 columna matriz) fila columna))
   (combo (verifDiagonal_suma (agregar 2 columna matriz) fila columna))
-  (combo_vertical (verifHorizontal (agregar 1 columna matriz) fila columna))
-  (combo_vertical (verifVertical (agregar 1 columna matriz) fila columna))
-  (combo (verifDiagonal_suma (agregar 1 columna matriz) fila columna))))
+  (combo_enemigo (verifHorizontal (agregar 1 columna matriz) fila columna))
+  (combo_enemigo (verifVertical (agregar 1 columna matriz) fila columna))
+  (combo_enemigo (verifDiagonal_suma (agregar 1 columna matriz) fila columna))))
 
 (define (combo num)
-  (cond ((>= num 2) (+ num 1))
-    (else num)))
+  (cond ((= num 2) (+ num 1))
+        ((>= num 3)(+ num 2))
+        (else num)))
 
-(define (combo_vertical num)
+(define (combo_enemigo num)
   (cond ((>= num 2) (+ num 2))
-    (else num)))
+        ((>= num 3)(+ num 4))
+        (else num)))
 
 #|
  -Funcion selección
