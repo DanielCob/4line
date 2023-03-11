@@ -1,5 +1,5 @@
 #lang racket
-(provide crearmatriz elementoMatriz algoritmo turno)
+(provide crearmatriz elementoMatriz elemento algoritmo turno numeroFila)
 
 #|
  -Función crearmatriz
@@ -94,18 +94,19 @@
  -Funcion numeroFila
  -Es un contador que devuelve el numero de fila donde está el ultimo elemento distinto de cero en una columna.
  -Recibe fila el cual es el contador que irá aumentando, y una lista que será la columna.
- -Devuelve el numero de fila de la ultima ficha.
+ -Devuelve el numero de fila de la ultima ficha o #f si la columna está llena.
 |#
 (define (numeroFila columna)
   (numeroFila_aux 0 columna))
 
 (define (numeroFila_aux indice columna)
-  (cond ((null? columna)
-          #f)
-        ((zero? (car columna))
-         indice)
-        (else
-         (numeroFila_aux (+ indice 1) (cdr columna)))))
+  (cond
+    ((null? columna)
+     #f)
+    ((zero? (car columna))
+     indice)
+    (else
+     (numeroFila_aux (+ indice 1) (cdr columna)))))
 
 #|
  -Funcion algoritmo
@@ -114,8 +115,7 @@
  -Devuelve una columna donde poner la ficha.
 |#
 (define (algoritmo matriz)
-  (seleccion (objetivo (viabilidad matriz) matriz))
-  )
+  (seleccion (objetivo (viabilidad matriz) matriz)))
 
 #|
  -Funcion viabilidad

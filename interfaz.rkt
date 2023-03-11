@@ -96,8 +96,10 @@
    -Puede enviar un mensaje de victoria, perdida o empate si se cumplen las condiciones
   |#
   (define (clickCasilla columna)
-    (cond ((equal? (turno 1 4 (+ columna 1) matriz) #t) (message-box "Fin de la partida" "Ganaste!"))
-          (else (clickCasilla_aux (turno 1 4 (+ columna 1) matriz))))
+    (cond
+      ((false? (numeroFila (elemento columna matriz)))(message-box "Advertencia" "No es posible colocar una ficha en esta columna"))
+      ((equal? (turno 1 4 columna matriz) #t) (message-box "Fin de la partida" "Ganaste!"))
+          (else (clickCasilla_aux (turno 1 4 columna matriz))))
     (send ventanaJuego refresh))
 
   (define (clickCasilla_aux matriz_aux)
@@ -137,7 +139,7 @@
    |# 
   (define botones
     (for/list ([i (in-range (string->number m))])
-      (new button% [parent PanelInput] [label (format "~a" (add1 i))] [min-height 56] [callback (lambda (button event) (clickCasilla i))])))
+      (new button% [parent PanelInput] [label (format "~a" (add1 i))] [min-height 56] [callback (lambda (button event) (clickCasilla (+ i 1)))])))
   
   #|
    -Función dibujarCanvas
