@@ -27,7 +27,7 @@
 |#
 (define filas (new choice% [parent PanelInput]
                                 [label "Filas "]
-                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [choices (list "4" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
                                 [vert-margin 10]
                                 [horiz-margin 30]))
 
@@ -37,7 +37,7 @@
 |#
 (define columnas (new choice% [parent PanelInput]
                                 [label "Columnas "]
-                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [choices (list "4" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
                                 [vert-margin 10]
                                 [horiz-margin 30]))
 
