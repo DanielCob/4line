@@ -1,5 +1,5 @@
 #lang racket
-(provide crearmatriz elementoMatriz elemento algoritmo turno numeroFila)
+(provide crearmatriz elementoMatriz elemento algoritmo turno numeroFila numeroFilaconF)
 
 #|
  -Función crearmatriz
@@ -102,12 +102,24 @@
 (define (numeroFila_aux indice columna)
   (cond
     ((null? columna)
-     #f)
+     indice)
     ((zero? (car columna))
      indice)
     (else
      (numeroFila_aux (+ indice 1) (cdr columna)))))
 
+;;********************************
+(define (numeroFilaconF columna)
+  (numeroFilaconF_aux 0 columna))
+
+(define (numeroFilaconF_aux indice columna)
+  (cond
+    ((null? columna)
+     #f)
+    ((zero? (car columna))
+     indice)
+    (else
+     (numeroFilaconF_aux (+ indice 1) (cdr columna)))))
 #|
  -Funcion algoritmo
  -Elige una columna óptima basada en una heurística.
@@ -128,7 +140,7 @@
 
 (define (viabilidad_aux matriz lista indice)
   (cond ((null? matriz) lista)
-        ((false? (numeroFila (car matriz))) (viabilidad_aux (cdr matriz) lista (+ indice 1)))
+        ((false? (numeroFilaconF (car matriz))) (viabilidad_aux (cdr matriz) lista (+ indice 1)))
         (else (viabilidad_aux (cdr matriz) (append lista (list indice)) (+ indice 1)))))
 
 #|

@@ -27,7 +27,7 @@
 |#
 (define filas (new choice% [parent PanelInput]
                                 [label "Filas "]
-                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [choices (list "4" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
                                 [vert-margin 10]
                                 [horiz-margin 30]))
 
@@ -37,7 +37,7 @@
 |#
 (define columnas (new choice% [parent PanelInput]
                                 [label "Columnas "]
-                                [choices (list "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
+                                [choices (list "4" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18")]
                                 [vert-margin 10]
                                 [horiz-margin 30]))
 
@@ -97,11 +97,22 @@
   |#
   (define (clickCasilla columna)
     (cond
-      ((false? (numeroFila (elemento columna matriz)))(message-box "Advertencia" "No es posible colocar una ficha en esta columna"))
+      ((false? (numeroFilaconF (elemento columna matriz)))(message-box "Advertencia" "No es posible colocar una ficha en esta columna"))
       ((equal? (turno 1 4 columna matriz) #t) (message-box "Fin de la partida" "Ganaste!"))
           (else (clickCasilla_aux (turno 1 4 columna matriz))))
-    (send ventanaJuego refresh))
+    (send ventanaJuego refresh) 
+    (verificarEmpate matriz))
 
+(define (verificarEmpate matriz)
+  (cond ((null? matriz)
+         (message-box "Fin de la partida" "Empate"))
+        ((false? (numeroFilaconF (car matriz)))
+         (verificarEmpate (cdr matriz)))
+        (else
+         #f)))
+           
+           
+  
   (define (clickCasilla_aux matriz_aux)
     (cond ((equal? (turno 2 4 (algoritmo matriz_aux) matriz_aux) #t) (message-box "Fin de la partida" "Ganó la computadora"))
            (else (set! matriz (turno 2 4 (algoritmo matriz_aux) matriz_aux)))))
